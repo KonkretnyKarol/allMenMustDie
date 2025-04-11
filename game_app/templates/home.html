@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Home - All Men Must Die!{% endblock %}
+
+{% block content %}
+  <div class="jumbotron">
+    <h1 class="display-4">Welcome to All Men Must Die!</h1>
+    <p class="lead">This is a basic implementation of a browser game inspired by Tribal Wars.</p>
+    <hr class="my-4" />
+    {% if current_user.is_authenticated %}
+      <p>Hello, {{ current_user.username }}! Enjoy managing your tribe.</p>
+    {% else %}
+      <p>Sign up or log in to start building your empire.</p>
+      <a class="btn btn-primary btn-lg" href="{{ url_for('main.register') }}" role="button">Register</a>
+      <a class="btn btn-secondary btn-lg" href="{{ url_for('main.login') }}" role="button">Login</a>
+    {% endif %}
+  </div>
+
+  <div class="container">
+    <h1 class="mt-4">Your Villages</h1>
+    
+    {% if current_user.is_authenticated %}
+        {% if villages %}
+            <div class="row">
+                {% for village in villages %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ village.name }}</h5>
+                                <div class="resources">
+                                    <p><i class="fas fa-tree"></i> Wood: {{ village.wood }}</p>
+                                    <p><i class="fas fa-mountain"></i> Stone: {{ village.stones }}</p>
+                                    <p><i class="fas fa-heart"></i> Morale: {{ village.morale }}%</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>You don't have any villages yet.</p>
+        {% endif %}
+    {% else %}
+        <p>Please <a href="{{ url_for('main.login') }}">login</a> to view your villages.</p>
+    {% endif %}
+  </div>
+{% endblock %}
