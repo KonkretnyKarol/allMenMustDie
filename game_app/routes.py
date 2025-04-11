@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, flash
 from game_app import db, bcrypt
 from game_app.models import User
-from game_app.forms import RegistrationForm, LoginForm
+from game_app.forms import RegistrationForm, LoginForm, ChangePasswordForm
 from flask_login import login_user, logout_user, login_required, current_user
 from game_app.models import Village
 
@@ -51,3 +51,18 @@ def logout():
     logout_user()
     flash('You have been logged out.', 'info')
     return redirect(url_for('main.home'))
+
+@main_bp.route('/change-password', methods=['GET', 'POST'])
+@login_required
+def change_password():
+    form = ChangePasswordForm()
+    if form.validate_on_submit():
+        if bcrypt.check_password_hash(current_user.password, form.current_password.data):
+            hashed_password = bcrypt.generate_password_hash(form.new_password.data).decode('utf-8')
+            current_user.password = hashed_password
+            db.session.commit()
+            flash('Your password has been updated!', 'success')
+            return redirect(url_for('main.home'))
+        else:
+            flash('Current password is incorrect', 'danger')
+    return render_template('change_password.html', form=form)

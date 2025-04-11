@@ -3,6 +3,41 @@
 ## Project Overview
 allMenMustDie-1 is a Flask-based web application designed to mimic the gameplay of Tribal Wars. This project currently implements a user login system, allowing users to register and log in to their accounts.
 
+## TODO
+
+1. User Management:
+- login
+- logout
+- register
+- change password
+- change username
+- implement verification email in the distant future
+
+2. Village management
+- village view (resources, buildings and men)
+- rename village 
+- prepare buildings
+- construct buildings
+- make buldings meaningful (bonuses!)
+- think about statistics sheet
+
+3. Army management 
+- different types of soldiers
+- different statistics for each type
+- recruit soldiers
+- disband soldiers
+- recruitment time
+
+4. Map
+- villages have to be on specific coordinates
+- think about map design
+- villages have to spawn with random coordinates
+- army will march accordingly to distance
+
+5. Scheduler
+- how often does the game world updates?
+- one or many schedulers (constant update each 10sec or different intervals for different mechanics)
+
 ## Project Structure
 ```
 allMenMustDie-1
